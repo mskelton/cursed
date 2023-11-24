@@ -1,0 +1,10 @@
+{
+  "extends": [
+    "@mskelton",
+    "@mskelton/eslint-config/react",
+    "next/core-web-vitals"
+  ],
+  "rules": {
+    "sort/object-properties": "off"
+  }
+}
