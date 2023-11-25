@@ -52,8 +52,8 @@ export function Cursors() {
 
           if (cursor && cursor.ref.current) {
             cursor.ref.current.style.visibility = "visible"
-            cursor.ref.current.style.top = `${data.coords.y}%`
-            cursor.ref.current.style.left = `${data.coords.x}%`
+            cursor.ref.current.style.setProperty("--x", `${data.coords.x}vw`)
+            cursor.ref.current.style.setProperty("--y", `${data.coords.y}vh`)
           }
         }
       }

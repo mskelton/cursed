@@ -18,15 +18,17 @@ export const Cursor = forwardRef<HTMLDivElement, CursorProps>(function Cursor(
     <div
       ref={ref}
       className={clsx(
-        "fixed flex gap-1 rounded text-xs",
+        "fixed flex translate-x-[--x] translate-y-[--y] gap-1 rounded text-xs",
         // If we don't have any initial coordinates for the user, hide this
         // cursor. This happens when a new client first connects.
         connection.coords.x ? "visible" : "invisible",
       )}
-      style={{
-        left: `${connection.coords.x}%`,
-        top: `${connection.coords.y}%`,
-      }}
+      style={
+        {
+          "--x": `${connection.coords.x}vw`,
+          "--y": `${connection.coords.y}vh`,
+        } as React.CSSProperties
+      }
     >
       <Arrow color={color} />
 
