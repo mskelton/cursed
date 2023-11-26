@@ -27,29 +27,27 @@ export function App() {
         <Tracker isActive={isActive} />
 
         <div className="flex min-h-screen flex-col items-center justify-center p-12 text-center">
-          <div>
-            <h1 className="mb-8 text-5xl font-bold">Cursed</h1>
-            <p className="mb-6 text-xl text-gray-400">
-              Multi-player live cursors
-            </p>
+          <h1 className="mb-8 text-5xl font-bold">Cursed</h1>
+          <p className="mb-4 text-xl text-gray-400">
+            Multi-player live cursors
+          </p>
 
-            <div className="flex items-center justify-center gap-4">
-              <button
-                className="text-gray-200 transition-colors hover:text-indigo-500"
-                onClickCapture={() => setIsActive(!isActive)}
-              >
-                <span className="sr-only">{isActive ? "Pause" : "Play"}</span>
-                <Icon className="h-8 w-8" />
-              </button>
+          <div className="isolate flex items-center justify-center gap-4 rounded-lg bg-gray-950 p-2">
+            <button
+              className="text-gray-200 transition-colors hover:text-indigo-500"
+              onClickCapture={() => setIsActive(!isActive)}
+            >
+              <span className="sr-only">{isActive ? "Pause" : "Play"}</span>
+              <Icon className="h-8 w-8" />
+            </button>
 
-              <a
-                className="text-gray-200 transition-colors hover:text-indigo-500"
-                href="https://github.com/mskelton/cursed"
-              >
-                <span className="sr-only">View source on GitHub</span>
-                <GitHubIcon className="h-8 w-8" />
-              </a>
-            </div>
+            <a
+              className="text-gray-200 transition-colors hover:text-indigo-500"
+              href="https://github.com/mskelton/cursed"
+            >
+              <span className="sr-only">View source on GitHub</span>
+              <GitHubIcon className="h-8 w-8" />
+            </a>
           </div>
         </div>
       </div>
