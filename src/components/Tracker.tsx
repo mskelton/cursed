@@ -1,11 +1,8 @@
-"use client"
-
 import { useEffect, useState } from "react"
 import { useSocket } from "../hooks"
 import { stringify } from "../lib"
 
-export function Tracker() {
-  const [isActive, setIsActive] = useState(true)
+export function Tracker({ isActive }: { isActive: boolean }) {
   const { socket } = useSocket()
 
   useEffect(() => {
@@ -25,22 +22,12 @@ export function Tracker() {
     const handleTouch = (e: TouchEvent) =>
       e.touches[0] ? publish(e.touches[0]) : null
 
-    function handleKeyDown(e: KeyboardEvent) {
-      if (e.key === "Escape") {
-        setIsActive(false)
-      } else if (e.key === " ") {
-        setIsActive((prev) => !prev)
-      }
-    }
-
-    window.addEventListener("keydown", handleKeyDown)
     if (isActive) {
       window.addEventListener("mousemove", handleMove)
       window.addEventListener("touchmove", handleTouch)
     }
 
     return () => {
-      window.removeEventListener("keydown", handleKeyDown)
       window.removeEventListener("mousemove", handleMove)
       window.removeEventListener("touchmove", handleTouch)
     }

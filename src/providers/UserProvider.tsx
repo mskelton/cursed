@@ -1,5 +1,3 @@
-"use client"
-
 import { faker } from "@faker-js/faker"
 import { createContext, useContext } from "react"
 

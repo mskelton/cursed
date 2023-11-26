@@ -1,5 +1,3 @@
-"use client"
-
 import { createRef, useEffect, useRef } from "react"
 import { useMap } from "usehooks-ts"
 import { useSocket } from "../hooks"
