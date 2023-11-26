@@ -15,7 +15,7 @@ function parseMessage(raw: string | Buffer) {
 }
 
 const server = Bun.serve<{ connectionId: string }>({
-  port: process.env.SERVER_PORT || 3001,
+  port: 8081,
   fetch(req, server) {
     const url = new URL(req.url)
 

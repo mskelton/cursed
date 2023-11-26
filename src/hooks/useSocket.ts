@@ -64,7 +64,7 @@ export function useSocket() {
   const [socket, setSocket] = useState<WebSocket | null>(null)
 
   useEffect(() => {
-    const url = `ws://${location.hostname}:3001/chat?name=${name}`
+    const url = `ws://${location.hostname}:8081/chat?name=${name}`
 
     return subscribe(url, (type, socket) => {
       switch (type) {

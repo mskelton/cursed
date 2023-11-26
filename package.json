@@ -1,6 +1,6 @@
 {
   "name": "cursed",
-  "description": "Multi-player live cursors",
+  "description": "Multiplayer live cursors",
   "packageManager": "pnpm@8.10.5",
   "type": "module",
   "scripts": {

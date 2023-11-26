@@ -6,7 +6,7 @@ import { Provider } from "./providers"
 import { useEffect, useState } from "react"
 
 export function App() {
-  const [isActive, setIsActive] = useState(false)
+  const [isActive, setIsActive] = useState(true)
   const Icon = isActive ? PauseIcon : PlayIcon
 
   useEffect(() => {
@@ -28,9 +28,7 @@ export function App() {
 
         <div className="flex min-h-screen flex-col items-center justify-center p-12 text-center">
           <h1 className="mb-8 text-5xl font-bold">Cursed</h1>
-          <p className="mb-4 text-xl text-gray-400">
-            Multi-player live cursors
-          </p>
+          <p className="mb-4 text-xl text-gray-400">Multiplayer live cursors</p>
 
           <div className="isolate flex items-center justify-center gap-4 rounded-lg bg-gray-950 p-2">
             <button
