@@ -26,7 +26,7 @@ export function App() {
         <Cursors />
         <Tracker isActive={isActive} />
 
-        <div className="flex min-h-screen flex-col items-center justify-center p-12 text-center">
+        <div className="flex min-h-[100svh] flex-col items-center justify-center p-12 text-center">
           <h1 className="mb-8 text-5xl font-bold">Cursed</h1>
           <p className="mb-4 text-xl text-gray-400">Multiplayer live cursors</p>
 
