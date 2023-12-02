@@ -1,9 +1,10 @@
-import { createRef, useEffect, useRef } from "react"
-import { useMap } from "usehooks-ts"
+import { createRef, useEffect, useRef, useState } from "react"
 import { useSocket } from "../hooks"
 import { parse } from "../lib"
 import { ClientConnection, ServerConnection } from "../types"
 import { Cursor } from "./Cursor"
+
+type ConnectionMap = Record<string, ClientConnection>
 
 function makeClientConnection(connection: ServerConnection): ClientConnection {
   return {
@@ -14,7 +15,7 @@ function makeClientConnection(connection: ServerConnection): ClientConnection {
 
 export function Cursors() {
   const { socket } = useSocket()
-  const [cursors, actions] = useMap<string, ClientConnection>()
+  const [cursors, setCursors] = useState<ConnectionMap>({})
   const cursorsRef = useRef(cursors)
   cursorsRef.current = cursors
 
@@ -24,29 +25,36 @@ export function Cursors() {
 
       switch (data.type) {
         case "init":
-          actions.setAll(
-            data.connections.reduce((acc, connection) => {
-              acc.set(connection.id, {
+          setCursors(
+            data.connections.reduce<ConnectionMap>((acc, connection) => {
+              acc[connection.id] = {
                 ...connection,
                 ref: createRef<HTMLDivElement>(),
-              })
+              }
 
               return acc
-            }, new Map<string, ClientConnection>()),
+            }, {}),
           )
           break
 
         case "connect":
-          if (cursorsRef.current.has(data.connection.id)) return
-          actions.set(data.connection.id, makeClientConnection(data.connection))
+          if (cursorsRef.current[data.connection.id]) {
+            setCursors((prev) => ({
+              ...prev,
+              [data.connection.id]: makeClientConnection(data.connection),
+            }))
+          }
           break
 
         case "disconnect":
-          actions.remove(data.connectionId)
+          setCursors((prev) => {
+            const { [data.connectionId]: _, ...next } = prev
+            return next
+          })
           break
 
         case "move": {
-          const cursor = cursorsRef.current.get(data.connectionId)
+          const cursor = cursorsRef.current[data.connectionId]
 
           if (cursor && cursor.ref.current) {
             cursor.ref.current.style.visibility = "visible"
@@ -62,13 +70,11 @@ export function Cursors() {
     return () => {
       socket?.removeEventListener("message", handleMessage)
     }
-  }, [socket, actions])
+  }, [socket])
 
   return (
     <>
-      {[...cursors.keys()].map((key) => {
-        const item = cursors.get(key)
-
+      {Object.entries(cursors).map(([key, item]) => {
         return item ? (
           <Cursor key={key} ref={item.ref} connection={item} />
         ) : null
