@@ -6,30 +6,28 @@ export function Tracker({ isActive }: { isActive: boolean }) {
   const { socket } = useSocket()
 
   useEffect(() => {
-    function publish(e: MouseEvent | Touch) {
+    function handleMove(event: MouseEvent | TouchEvent) {
+      const source = "touches" in event ? event.touches[0] : event
+
       socket?.send(
         stringify({
           coords: {
-            x: (e.clientX / window.innerWidth) * 100,
-            y: (e.clientY / window.innerHeight) * 100,
+            x: (source.clientX / window.innerWidth) * 100,
+            y: (source.clientY / window.innerHeight) * 100,
           },
           type: "move",
         }),
       )
     }
 
-    const handleMove = (e: MouseEvent) => publish(e)
-    const handleTouch = (e: TouchEvent) =>
-      e.touches[0] ? publish(e.touches[0]) : null
-
     if (isActive) {
       window.addEventListener("mousemove", handleMove)
-      window.addEventListener("touchmove", handleTouch)
+      window.addEventListener("touchmove", handleMove)
     }
 
     return () => {
       window.removeEventListener("mousemove", handleMove)
-      window.removeEventListener("touchmove", handleTouch)
+      window.removeEventListener("touchmove", handleMove)
     }
   }, [isActive, socket])
 
