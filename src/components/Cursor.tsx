@@ -1,8 +1,10 @@
 import clsx from "clsx"
-import hashbow from "hashbow"
 import { forwardRef } from "react"
 import { ClientConnection } from "../types"
 import { Arrow } from "./Arrow"
+import ColorHash from "color-hash"
+
+const hash = new ColorHash({ lightness: 0.3 })
 
 export interface CursorProps {
   connection: ClientConnection
@@ -12,7 +14,7 @@ export const Cursor = forwardRef<HTMLDivElement, CursorProps>(function Cursor(
   { connection },
   ref,
 ) {
-  const color = hashbow(connection.user.name, 100, 30)
+  const color = hash.hex(connection.user.name)
 
   return (
     <div

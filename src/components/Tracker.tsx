@@ -11,11 +11,11 @@ export function Tracker({ isActive }: { isActive: boolean }) {
 
       socket?.send(
         stringify({
+          type: "move",
           coords: {
             x: (source.clientX / window.innerWidth) * 100,
             y: (source.clientY / window.innerHeight) * 100,
           },
-          type: "move",
         }),
       )
     }

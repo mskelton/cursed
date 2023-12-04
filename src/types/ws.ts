@@ -21,4 +21,3 @@ export type ClientMessage = {
   coords: Coords
   type: "move"
 }
-

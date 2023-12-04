@@ -74,11 +74,13 @@ export function Cursors() {
 
   return (
     <>
-      {Object.entries(cursors).map(([key, item]) => {
-        return item ? (
-          <Cursor key={key} ref={item.ref} connection={item} />
-        ) : null
-      })}
+      {Object.values(cursors).map((connection) => (
+        <Cursor
+          key={connection.id}
+          ref={connection.ref}
+          connection={connection}
+        />
+      ))}
     </>
   )
 }
