@@ -38,7 +38,7 @@ export function Cursors() {
           break
 
         case "connect":
-          if (cursorsRef.current[data.connection.id]) {
+          if (!cursorsRef.current[data.connection.id]) {
             setCursors((prev) => ({
               ...prev,
               [data.connection.id]: makeClientConnection(data.connection),
