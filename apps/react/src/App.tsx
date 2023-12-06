@@ -1,9 +1,9 @@
 import "./globals.css"
+import { useEffect, useState } from "react"
 import { Cursors } from "./components/Cursors"
 import { GitHubIcon, PauseIcon, PlayIcon } from "./components/icons"
 import { Tracker } from "./components/Tracker"
 import { Provider } from "./providers"
-import { useEffect, useState } from "react"
 
 export function App() {
   const [isActive, setIsActive] = useState(true)
@@ -34,6 +34,7 @@ export function App() {
             <button
               className="text-gray-200 transition-colors hover:text-indigo-500"
               onClickCapture={() => setIsActive(!isActive)}
+              type="button"
             >
               <span className="sr-only">{isActive ? "Pause" : "Play"}</span>
               <Icon className="h-8 w-8" />

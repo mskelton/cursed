@@ -1,8 +1,8 @@
 import clsx from "clsx"
+import ColorHash from "color-hash"
 import { forwardRef } from "react"
 import { ClientConnection } from "../types"
 import { Arrow } from "./Arrow"
-import ColorHash from "color-hash"
 
 const hash = new ColorHash({ lightness: 0.3 })
 

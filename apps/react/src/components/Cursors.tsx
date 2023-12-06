@@ -1,6 +1,6 @@
 import { createRef, useEffect, useRef, useState } from "react"
+import { parse } from "@cursed/utils"
 import { useSocket } from "../hooks"
-import { parse } from "../lib"
 import { ClientConnection, ServerConnection } from "../types"
 import { Cursor } from "./Cursor"
 

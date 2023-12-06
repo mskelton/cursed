@@ -1,0 +1,18 @@
+{
+  "$schema": "https://turbo.build/schema.json",
+  "pipeline": {
+    "lint": {},
+    "build": {
+      "outputs": ["dist/**/*.js"],
+      "dependsOn": ["^build"]
+    },
+    "ts": {
+      "outputs": ["dist/**/*.d.ts", "tsconfig.tsbuildinfo"],
+      "dependsOn": ["^ts"]
+    },
+    "dev": {
+      "dependsOn": ["build"],
+      "cache": false
+    }
+  }
+}

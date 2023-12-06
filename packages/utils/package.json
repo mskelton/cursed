@@ -1,0 +1,22 @@
+{
+  "name": "@cursed/utils",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    "types": "./dist/index.ts",
+    "import": "./dist/index.js"
+  },
+  "scripts": {
+    "build": "tsup src/index.ts --format=esm",
+    "dev": "pnpm build --watch",
+    "lint": "eslint src",
+    "ts": "tsc"
+  },
+  "devDependencies": {
+    "@cursed/eslint-config": "workspace:*",
+    "@cursed/tsconfig": "workspace:*",
+    "@types/react": "^18.2.38",
+    "tsup": "^8.0.1"
+  }
+}

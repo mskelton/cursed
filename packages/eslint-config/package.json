@@ -1,0 +1,19 @@
+{
+  "name": "@cursed/eslint-config",
+  "version": "0.0.0",
+  "private": true,
+  "type": "commonjs",
+  "exports": {
+    ".": "./index.js",
+    "./react": "./react.js"
+  },
+  "dependencies": {
+    "@mskelton/eslint-config": "^8.4.0",
+    "@typescript-eslint/eslint-plugin": "^6.12.0",
+    "@typescript-eslint/parser": "^6.12.0",
+    "eslint": "^8.54.0",
+    "eslint-plugin-sort": "^2.11.0",
+    "eslint-plugin-react": "^7.33.2",
+    "eslint-plugin-react-hooks": "^4.6.0"
+  }
+}
