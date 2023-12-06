@@ -1,6 +1,6 @@
 import { useEffect } from "react"
+import { stringify } from "@cursed/utils"
 import { useSocket } from "../hooks"
-import { stringify } from "../lib"
 
 export function Tracker({ isActive }: { isActive: boolean }) {
   const { socket } = useSocket()
@@ -8,6 +8,7 @@ export function Tracker({ isActive }: { isActive: boolean }) {
   useEffect(() => {
     function handleMove(event: MouseEvent | TouchEvent) {
       const source = "touches" in event ? event.touches[0] : event
+      if (!source) return
 
       socket?.send(
         stringify({

@@ -1,9 +1,10 @@
-import { parse, stringify } from "./src/lib"
-import type {
-  ServerConnection,
-  ClientMessage,
-  ServerMessage,
-} from "./src/types"
+import {
+  type ClientMessage,
+  parse,
+  type ServerConnection,
+  type ServerMessage,
+  stringify,
+} from "@cursed/utils"
 
 const GROUP_ID = "cursed"
 const connections = new Map<string, ServerConnection>()
