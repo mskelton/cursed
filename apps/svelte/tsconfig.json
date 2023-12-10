@@ -1,0 +1,9 @@
+{
+  "extends": "@cursed/tsconfig/react.json",
+  "compilerOptions": {
+    "rootDir": "src",
+    "outDir": "dist"
+  },
+  "include": ["src"],
+  "references": [{ "path": "../../packages/utils" }]
+}
