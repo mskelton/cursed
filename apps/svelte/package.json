@@ -1,10 +1,10 @@
 {
-  "name": "@cursed/react",
+  "name": "@cursed/svelte",
   "version": "0.0.0",
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "rsbuild dev",
+    "dev": "vite dev",
     "lint": "eslint --ext .ts,.svelte src",
     "ts": "tsc"
   },
@@ -17,12 +17,12 @@
   "devDependencies": {
     "@cursed/eslint-config": "workspace:*",
     "@cursed/tsconfig": "workspace:*",
-    "@rsbuild/core": "^0.1.2",
-    "@rsbuild/plugin-svelte": "^0.1.2",
+    "@sveltejs/vite-plugin-svelte": "^3.0.1",
     "@types/color-hash": "^1.0.5",
     "autoprefixer": "^10.4.16",
     "postcss": "^8.4.31",
     "svelte": "^4.2.8",
-    "tailwindcss": "^3.3.6"
+    "tailwindcss": "^3.3.6",
+    "vite": "^5.0.7"
   }
 }

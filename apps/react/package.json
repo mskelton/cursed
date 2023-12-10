@@ -4,7 +4,7 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "rsbuild dev",
+    "dev": "vite dev",
     "lint": "eslint src",
     "ts": "tsc"
   },
@@ -19,13 +19,13 @@
   "devDependencies": {
     "@cursed/eslint-config": "workspace:*",
     "@cursed/tsconfig": "workspace:*",
-    "@rsbuild/core": "^0.1.2",
-    "@rsbuild/plugin-react": "^0.1.2",
     "@types/color-hash": "^1.0.5",
     "@types/react": "^18.2.38",
     "@types/react-dom": "^18.2.17",
+    "@vitejs/plugin-react": "^4.2.1",
     "autoprefixer": "^10.4.16",
     "postcss": "^8.4.31",
-    "tailwindcss": "^3.3.6"
+    "tailwindcss": "^3.3.6",
+    "vite": "^5.0.7"
   }
 }

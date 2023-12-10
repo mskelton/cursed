@@ -1,7 +1,7 @@
 <script lang="ts">
   import clsx from "clsx"
   import ColorHash from "color-hash"
-  import { ServerConnection } from "@cursed/utils"
+  import { type ServerConnection } from "@cursed/utils"
   import Arrow from "./icons/Arrow.svelte"
 
   export let connection: ServerConnection

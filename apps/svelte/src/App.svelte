@@ -1,11 +1,17 @@
-<script>
+<script lang="ts">
   import Cursors from "./components/Cursors.svelte"
   import Tracker from "./components/Tracker.svelte"
   import PlayIcon from "./components/icons/PlayIcon.svelte"
   import PauseIcon from "./components/icons/PauseIcon.svelte"
   import GitHubIcon from "./components/icons/GitHubIcon.svelte"
 
-  let isActive = false
+  let isActive = true
+
+  function onKeyDown(e: KeyboardEvent) {
+    if (e.key === " " && e.target === document.body) {
+      isActive = !isActive
+    }
+  }
 </script>
 
 <div>
@@ -43,3 +49,5 @@
     </div>
   </div>
 </div>
+
+<svelte:window on:keydown|preventDefault={onKeyDown} />
