@@ -1,7 +1,7 @@
 import { createRef, useEffect, useRef, useState } from "react"
-import { parse } from "@cursed/utils"
+import { parse, ServerConnection } from "@cursed/utils"
 import { useSocket } from "../hooks"
-import { ClientConnection, ServerConnection } from "../types"
+import { ClientConnection } from "../types"
 import { Cursor } from "./Cursor"
 
 type ConnectionMap = Record<string, ClientConnection>
