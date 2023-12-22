@@ -46,14 +46,14 @@ const server = Bun.serve<{ connectionId: string }>({
   },
   websocket: {
     open(ws) {
-      // If the connection isn't found, something went wrong so let's just bail
+      // If the user isn't found, something went wrong so let's just bail
       const connection = connections.get(ws.data.connectionId)
       if (!connection) return
 
       // Subscribe the new user to the group
       ws.subscribe(GROUP_ID)
 
-      // Notify other connections of the new connection
+      // Notify other users of the new user
       ws.publish(GROUP_ID, stringify({ type: "connect", connection }))
 
       // Send the list of connected users to the new user
@@ -74,17 +74,17 @@ const server = Bun.serve<{ connectionId: string }>({
 
       switch (message.type) {
         case "move": {
-          // Ignore connections we don't recognize
+          // Ignore users we don't recognize
           const connection = connections.get(ws.data.connectionId)
           if (!connection) return
 
-          // Update the saved coordinates for this connection
+          // Update the saved coordinates for this user
           connections.set(ws.data.connectionId, {
             ...connection,
             coords: message.coords,
           })
 
-          // Send the updated coordinates to all other connections
+          // Send the updated coordinates to all other users
           ws.publish(
             GROUP_ID,
             stringify<ServerMessage>({
@@ -97,13 +97,13 @@ const server = Bun.serve<{ connectionId: string }>({
       }
     },
     close(ws) {
-      // Remove the connection from the list of connections
+      // Remove the user from the list of users
       connections.delete(ws.data.connectionId)
 
-      // Unsubscribe the connection from the group
+      // Unsubscribe the user from the group
       ws.unsubscribe(GROUP_ID)
 
-      // Notify other connections that this connection was closed
+      // Notify other users that this user was closed
       server.publish(
         GROUP_ID,
         stringify<ServerMessage>({
