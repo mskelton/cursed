@@ -38,12 +38,10 @@ function join(url: string) {
       setTimeout(connect, 1000)
     })
 
-    return socket
+    sockets.set(url, socket)
   }
 
-  const socket = connect()
-  sockets.set(url, socket)
-  return socket
+  connect()
 }
 
 function subscribe(url: string, fn: Subscriber) {

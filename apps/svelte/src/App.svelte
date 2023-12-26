@@ -21,7 +21,7 @@
   <div
     class="flex min-h-[100svh] flex-col items-center justify-center p-12 text-center"
   >
-    <h1 class="mb-8 text-5xl font-bold">Cursed</h1>
+    <h1 class="mb-8 text-5xl font-bold text-gray-100">Cursed</h1>
     <p class="mb-4 text-xl text-gray-400">Multiplayer live cursors</p>
 
     <div
