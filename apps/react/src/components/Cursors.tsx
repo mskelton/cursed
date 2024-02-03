@@ -1,4 +1,4 @@
-import { createRef, useEffect, useRef, useState } from "react"
+import { createRef, useEffect, useState } from "react"
 import { parse, ServerConnection } from "@cursed/utils"
 import { useSocket } from "../hooks"
 import { ClientConnection } from "../types"
@@ -16,8 +16,6 @@ function makeClientConnection(connection: ServerConnection): ClientConnection {
 export function Cursors() {
   const { socket } = useSocket()
   const [cursors, setCursors] = useState<ConnectionMap>({})
-  const cursorsRef = useRef(cursors)
-  cursorsRef.current = cursors
 
   useEffect(() => {
     function handleMessage(e: MessageEvent) {
@@ -27,18 +25,14 @@ export function Cursors() {
         case "init":
           setCursors(
             data.connections.reduce<ConnectionMap>((acc, connection) => {
-              acc[connection.id] = {
-                ...connection,
-                ref: createRef<HTMLDivElement>(),
-              }
-
+              acc[connection.id] = makeClientConnection(connection)
               return acc
             }, {}),
           )
           break
 
         case "connect":
-          if (!cursorsRef.current[data.connection.id]) {
+          if (!cursors[data.connection.id]) {
             setCursors((prev) => ({
               ...prev,
               [data.connection.id]: makeClientConnection(data.connection),
@@ -54,12 +48,13 @@ export function Cursors() {
           break
 
         case "move": {
-          const cursor = cursorsRef.current[data.connectionId]
+          const cursor = cursors[data.connectionId]
+          const { x, y } = data.coords
 
           if (cursor && cursor.ref.current) {
             cursor.ref.current.style.visibility = "visible"
-            cursor.ref.current.style.setProperty("--x", `${data.coords.x}vw`)
-            cursor.ref.current.style.setProperty("--y", `${data.coords.y}vh`)
+            cursor.ref.current.style.setProperty("--x", `${x}vw`)
+            cursor.ref.current.style.setProperty("--y", `${y}vh`)
           }
         }
       }
@@ -70,7 +65,7 @@ export function Cursors() {
     return () => {
       socket?.removeEventListener("message", handleMessage)
     }
-  }, [socket])
+  }, [cursors, socket])
 
   return (
     <>
