@@ -1,5 +1,5 @@
 import { createRef, useEffect, useState } from "react"
-import { parse, ServerConnection } from "@cursed/utils"
+import { parse, ServerConnection, stringify } from "@cursed/utils"
 import { useSocket } from "../hooks"
 import { ClientConnection } from "../types"
 import { Cursor } from "./Cursor"
@@ -14,15 +14,21 @@ function makeClientConnection(connection: ServerConnection): ClientConnection {
 }
 
 export function Cursors() {
-  const { socket } = useSocket()
+  const { send, socket } = useSocket()
   const [cursors, setCursors] = useState<ConnectionMap>({})
+
+  useEffect(() => {
+    // Fire off the info message to get the current connections when we
+    // initialize the component.
+    send(stringify({ type: "info" }))
+  }, [send])
 
   useEffect(() => {
     function handleMessage(e: MessageEvent) {
       const data = parse(e.data)
 
       switch (data.type) {
-        case "init":
+        case "info":
           setCursors(
             data.connections.reduce<ConnectionMap>((acc, connection) => {
               acc[connection.id] = makeClientConnection(connection)
@@ -65,7 +71,7 @@ export function Cursors() {
     return () => {
       socket?.removeEventListener("message", handleMessage)
     }
-  }, [cursors, socket])
+  }, [cursors, send, socket])
 
   return (
     <>

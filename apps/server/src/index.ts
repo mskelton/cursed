@@ -55,24 +55,24 @@ const server = Bun.serve<{ connectionId: string }>({
 
       // Notify other users of the new user
       ws.publish(GROUP_ID, stringify({ type: "connect", connection }))
-
-      // Send the list of connected users to the new user
-      if (!connections.size) return
-      setTimeout(() => {
-        ws.send(
-          stringify<ServerMessage>({
-            type: "init",
-            connections: [...connections.values()].filter(
-              (connection) => connection.id !== ws.data.connectionId,
-            ),
-          }),
-        )
-      }, 100)
     },
     message(ws, raw) {
       const message = parseMessage(raw)
 
       switch (message.type) {
+        case "info": {
+          ws.send(
+            stringify<ServerMessage>({
+              type: "info",
+              connections: [...connections.values()].filter(
+                (connection) => connection.id !== ws.data.connectionId,
+              ),
+            }),
+          )
+
+          break
+        }
+
         case "move": {
           // Ignore users we don't recognize
           const connection = connections.get(ws.data.connectionId)
@@ -93,6 +93,8 @@ const server = Bun.serve<{ connectionId: string }>({
               coords: message.coords,
             }),
           )
+
+          break
         }
       }
     },

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"
+import { useCallback, useEffect, useState } from "react"
 import { useUser } from "../providers"
 
 interface Subscriber<
@@ -8,6 +8,7 @@ interface Subscriber<
 }
 
 const sockets = new Map<string, WebSocket>()
+const queues = new Map<string, string[]>()
 const subscribers = new Map<string, Set<Subscriber>>()
 
 function join(url: string) {
@@ -60,13 +61,18 @@ function subscribe(url: string, fn: Subscriber) {
 export function useSocket() {
   const { name } = useUser()
   const [socket, setSocket] = useState<WebSocket | null>(null)
+  const url = `ws://${location.hostname}:8081/chat?name=${name}`
 
   useEffect(() => {
-    const url = `ws://${location.hostname}:8081/chat?name=${name}`
+    function drainQueue(socket: WebSocket) {
+      queues.get(url)?.forEach((message) => socket.send(message))
+      queues.set(url, [])
+    }
 
     return subscribe(url, (type, socket) => {
       switch (type) {
         case "open":
+          drainQueue(socket)
           setSocket(socket)
           break
 
@@ -75,7 +81,18 @@ export function useSocket() {
           break
       }
     })
-  }, [name])
+  }, [url])
 
-  return { socket }
+  const send = useCallback(
+    (message: string) => {
+      if (socket?.readyState === WebSocket.OPEN) {
+        socket.send(message)
+      } else {
+        queues.get(url)?.push(message)
+      }
+    },
+    [socket, url],
+  )
+
+  return { socket, send }
 }

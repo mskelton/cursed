@@ -8,19 +8,12 @@ export interface Coords {
 }
 
 export type ServerMessage =
-  | { connections: ServerConnection[]; type: "init" }
+  | { connections: ServerConnection[]; type: "info" }
   | { connection: ServerConnection; type: "connect" }
   | { connectionId: string; type: "disconnect" }
-  | {
-      connectionId: string
-      coords: Coords
-      type: "move"
-    }
+  | { connectionId: string; coords: Coords; type: "move" }
 
-export type ClientMessage = {
-  coords: Coords
-  type: "move"
-}
+export type ClientMessage = { coords: Coords; type: "move" } | { type: "info" }
 
 export function stringify<
   T extends ServerMessage | ClientMessage = ClientMessage,

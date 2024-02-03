@@ -3,14 +3,14 @@ import { stringify } from "@cursed/utils"
 import { useSocket } from "../hooks"
 
 export function Tracker({ isActive }: { isActive: boolean }) {
-  const { socket } = useSocket()
+  const { send } = useSocket()
 
   useEffect(() => {
     function handleMove(event: MouseEvent | TouchEvent) {
       const source = "touches" in event ? event.touches[0] : event
       if (!source) return
 
-      socket?.send(
+      send(
         stringify({
           type: "move",
           coords: {
@@ -30,7 +30,7 @@ export function Tracker({ isActive }: { isActive: boolean }) {
       window.removeEventListener("mousemove", handleMove)
       window.removeEventListener("touchmove", handleMove)
     }
-  }, [isActive, socket])
+  }, [isActive, send])
 
   return null
 }

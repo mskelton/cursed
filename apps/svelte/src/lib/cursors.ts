@@ -10,7 +10,7 @@ subscribe((event) => {
   const data = parse(event.data)
 
   switch (data.type) {
-    case "init":
+    case "info":
       cursors.set(
         data.connections.reduce<ConnectionMap>(
           (acc, cur) => ({ ...acc, [cur.id]: cur }),
